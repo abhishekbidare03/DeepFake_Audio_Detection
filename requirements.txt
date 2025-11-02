@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+torch
+numpy
+librosa
+scikit-learn
+soundfile
+tqdm
+python-multipart  # for file uploads
+requests  # for testing API

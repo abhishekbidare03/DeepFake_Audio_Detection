@@ -18,3 +18,11 @@ ENV/
 # Misc
 *.log
 .DS_Store
+
+# Data - exclude all data folders
+data/raw/
+data/processed/
+data/features/
+
+# Weights & Biases
+wandb/

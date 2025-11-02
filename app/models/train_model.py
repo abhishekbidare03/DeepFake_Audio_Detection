@@ -9,11 +9,18 @@ import torch.optim as optim
 from tqdm import tqdm
 
 # ==== CONFIG ====
-DATA_DIR = "app/data/features"
-EPOCHS = 10
-BATCH_SIZE = 16
-LR = 0.001
+DATA_DIR = "data/features"  # Update to project root path
+EPOCHS = 100  # Increased epochs for larger dataset
+BATCH_SIZE = 32  # Increased batch size for faster training
+LEARNING_RATE = 0.001
+WEIGHT_DECAY = 1e-5  # L2 regularization
+EARLY_STOPPING_PATIENCE = 5
+MODEL_SAVE_PATH = "app/models/best_model.pt"
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+
+print(f"Using device: {DEVICE}")
+if DEVICE == "cuda":
+    print(f"GPU: {torch.cuda.get_device_name(0)}")
 
 # ==== DATASET CLASS ====
 class AudioDataset(Dataset):
@@ -92,11 +99,16 @@ test_loader = DataLoader(test_set, batch_size=min(BATCH_SIZE, len(test_set)))
 # ==== MODEL ====
 model = AudioCNN().to(DEVICE)
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=LR)
+optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
+# Note: some torch versions' ReduceLROnPlateau does not accept `verbose` kwarg
+scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=2)
 
-# ==== TRAIN LOOP ====
+# ==== TRAINING SETUP ====
 best_val_f1 = 0.0
 best_model = None
+patience_counter = 0
+train_losses = []
+val_f1_scores = []
 
 for epoch in range(EPOCHS):
     # Training
@@ -126,34 +138,95 @@ for epoch in range(EPOCHS):
 
     # Validation
     model.eval()
+    val_loss = 0.0
     all_preds, all_labels = [], []
+    
     with torch.no_grad():
         for feats, labels in val_loader:
             feats, labels = feats.to(DEVICE), labels.to(DEVICE)
             outputs = model(feats)
+            val_loss += criterion(outputs, labels).item()
             preds = torch.argmax(outputs, dim=1)
             all_preds.extend(preds.cpu().numpy())
             all_labels.extend(labels.cpu().numpy())
 
-    acc = accuracy_score(all_labels, all_preds)
-    f1 = f1_score(all_labels, all_preds)
-    print(f"Epoch {epoch+1}: Loss={avg_loss:.4f} | Val_Acc={acc:.4f} | Val_F1={f1:.4f}")
+    val_loss /= len(val_loader)
+    val_acc = accuracy_score(all_labels, all_preds)
+    val_f1 = f1_score(all_labels, all_preds, average='weighted')
+    
+    # Save metrics for plotting
+    train_losses.append(avg_loss)
+    val_f1_scores.append(val_f1)
+    
+    print(f"\nEpoch {epoch+1}/{EPOCHS}")
+    print(f"Training Loss: {avg_loss:.4f}")
+    print(f"Validation - Loss: {val_loss:.4f}, Acc: {val_acc:.4f}, F1: {val_f1:.4f}")
+    
+    # Learning rate scheduling
+    scheduler.step(val_f1)
+    
+    # Save best model
+    if val_f1 > best_val_f1:
+        best_val_f1 = val_f1
+        best_model = model.state_dict().copy()
+        torch.save(best_model, MODEL_SAVE_PATH)
+        print(f"✨ New best model saved! (F1: {val_f1:.4f})")
+        patience_counter = 0
+    else:
+        patience_counter += 1
+    
+    # Early stopping
+    if patience_counter >= EARLY_STOPPING_PATIENCE:
+        print(f"\n⚠️ Early stopping triggered after {epoch+1} epochs")
+        break
 
-# ==== SAVE MODEL ====
-torch.save(model.state_dict(), "app/models/model.pt")
+# Load best model for final evaluation
+model.load_state_dict(torch.load(MODEL_SAVE_PATH))
 print("✅ Model saved as model.pt")
 
 # ==== TEST EVALUATION ====
 model.eval()
 test_preds, test_labels = [], []
+test_probs = []
+
 with torch.no_grad():
     for feats, labels in test_loader:
         feats, labels = feats.to(DEVICE), labels.to(DEVICE)
         outputs = model(feats)
+        probs = torch.softmax(outputs, dim=1)
         preds = torch.argmax(outputs, dim=1)
         test_preds.extend(preds.cpu().numpy())
         test_labels.extend(labels.cpu().numpy())
+        test_probs.extend(probs.cpu().numpy())
 
+# Calculate metrics
 acc = accuracy_score(test_labels, test_preds)
-f1 = f1_score(test_labels, test_preds)
-print(f"✅ Test Accuracy: {acc:.4f}, Test F1: {f1:.4f}")
+f1 = f1_score(test_labels, test_preds, average='weighted')
+test_probs = np.array(test_probs)
+
+print("\n=== Final Model Evaluation ===")
+print(f"Test Accuracy: {acc:.4f}")
+print(f"Test F1-Score: {f1:.4f}")
+
+# Print confusion matrix
+from sklearn.metrics import confusion_matrix
+# Ensure both labels are present when building the confusion matrix
+cm = confusion_matrix(test_labels, test_preds, labels=[0, 1])
+print("\nConfusion Matrix:")
+print("                  Predicted Real  Predicted Fake")
+print(f"Actually Real:        {cm[0][0]}             {cm[0][1]}")
+print(f"Actually Fake:        {cm[1][0]}             {cm[1][1]}")
+
+# Save training history
+import json
+history = {
+    'train_loss': train_losses,
+    'val_f1': val_f1_scores,
+    'final_test_acc': float(acc),
+    'final_test_f1': float(f1)
+}
+with open('training_history.json', 'w') as f:
+    json.dump(history, f)
+
+print("\n✅ Training complete! Model saved as:", MODEL_SAVE_PATH)
+print("   Training history saved as: training_history.json")
