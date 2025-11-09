@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>AudioGuard AI - Demo</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container container">
+            <div class="nav-logo"><i class="fas fa-shield-alt"></i><span>AudioGuard AI</span></div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="how.html">How It Works</a></li>
+                <li><a href="demo.html" class="active">Demo</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="auth.html">Login / Sign In</a></li>
+            </ul>
+            <div class="nav-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <section class="demo">
+        <div class="container">
+            <h2 class="section-title">Try AudioGuard AI</h2>
+            <p class="section-subtitle">Upload an audio file to simulate detection (frontend demo).</p>
+
+            <div class="demo-container">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                    <h3>Drop your audio file here</h3>
+                    <p>Or click to browse files</p>
+                    <input type="file" id="audio-upload" accept="audio/*" hidden>
+                    <button class="btn-upload">Choose File</button>
+                </div>
+
+                <div class="analysis-panel">
+                    <div class="analysis-header">
+                        <h3>Analysis Results</h3>
+                        <div class="status-indicator"><span class="status-text">Ready for analysis</span></div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="results-content">
+                        <p id="resultsText">Upload an audio file to see detailed analysis results (simulated).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 AudioGuard AI.</p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+        // small demo: simulate progress and update analysis text
+        const chooseBtn = document.querySelector('.btn-upload');
+        const fileInput = document.getElementById('audio-upload');
+        const progressFill = document.getElementById('progressFill');
+        const resultsText = document.getElementById('resultsText');
+        const uploadArea = document.getElementById('uploadArea');
+
+        chooseBtn.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', (e) => {
+            const f = e.target.files[0];
+            if (!f) return;
+            resultsText.textContent = `Selected: ${f.name} — running demo analysis...`;
+            progressFill.style.width = '0%';
+            setTimeout(() => progressFill.style.width = '40%', 200);
+            setTimeout(() => progressFill.style.width = '78%', 900);
+            setTimeout(() => {
+                progressFill.style.width = '100%';
+                resultsText.textContent = `Result: ⚠️ Likely AI-Generated (demo). Confidence: 85% — visual artifacts detected.`;
+            }, 1500);
+        });
+
+        // drag & drop
+        uploadArea.addEventListener('dragover', e => {
+            e.preventDefault();
+            uploadArea.style.transform = 'translateY(-4px)';
+        });
+        uploadArea.addEventListener('dragleave', e => {
+            uploadArea.style.transform = 'none';
+        });
+        uploadArea.addEventListener('drop', e => {
+            e.preventDefault();
+            uploadArea.style.transform = 'none';
+            const f = e.dataTransfer.files[0];
+            if (f) {
+                fileInput.files = e.dataTransfer.files;
+                fileInput.dispatchEvent(new Event('change'));
+            }
+        });
+    </script>
+</body>
+
+</html>

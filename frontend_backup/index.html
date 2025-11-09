@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>AudioGuard AI - Home</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- NAV -->
+    <nav class="navbar">
+        <div class="nav-container container">
+            <div class="nav-logo"><i class="fas fa-shield-alt"></i><span>AudioGuard AI</span></div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="how.html">How It Works</a></li>
+                <li><a href="demo.html">Demo</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="auth.html">Login / Sign In</a></li>
+            </ul>
+            <div class="nav-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="home" class="hero">
+        <div class="hero-container container">
+            <div class="hero-content">
+                <h1 class="hero-title">Protect Against AI-Generated Audio Deception</h1>
+                <p class="hero-subtitle">Advanced AI technology to detect deepfake audio, synthetic speech, and AI-generated voice content with industry-grade accuracy.</p>
+                <div class="hero-buttons">
+                    <a class="btn-primary" href="demo.html">Try Demo</a>
+                    <a class="btn-secondary" href="features.html">Learn More</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item"><span class="stat-number">99.7%</span><span class="stat-label">Accuracy</span></div>
+                    <div class="stat-item"><span class="stat-number">10M+</span><span class="stat-label">Audio Files Analyzed</span></div>
+                    <div class="stat-item"><span class="stat-number">50ms</span><span class="stat-label">Detection Speed</span></div>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="audio-visualization">
+                    <div class="waveform" aria-hidden="true">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+                    <div class="scan-line" aria-hidden="true"></div>
+                    <div class="detection-result" aria-live="polite"><i class="fas fa-exclamation-triangle"></i><span>AI Generated Audio Detected</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="floating-elements" aria-hidden="true">
+            <div class="float-element" style="--delay:0s;"><i class="fas fa-microphone"></i></div>
+            <div class="float-element" style="--delay:1s;"><i class="fas fa-brain"></i></div>
+            <div class="float-element" style="--delay:2s;"><i class="fas fa-shield-check"></i></div>
+            <div class="float-element" style="--delay:0.5s;"><i class="fas fa-wave-square"></i></div>
+        </div>
+    </section>
+
+    <!-- Light intro / CTA -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Detect & Defend</h2>
+            <p class="section-subtitle">AudioGuard AI combines spectral analysis and learned features to spot synthetic speech and voice-clone attacks — designed for security teams, journalists, and platforms.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+                <div><strong>AudioGuard AI</strong> &mdash; Protecting voices from misuse.</div>
+                <div class="social-links" style="display:flex;gap:10px">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

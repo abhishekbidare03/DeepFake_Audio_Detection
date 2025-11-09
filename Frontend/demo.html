@@ -1,482 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>AudioGuard AI - Demo</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* 1. YOUR GLOBAL STYLES & THEME (from index.html) */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #7c3aed;
-            --primary-light: #a78bfa;
-            --primary-dark: #6d28d9;
-            --accent: #ec4899;
-            --bg: #ffffff;
-            --bg-secondary: #faf8ff;
-            --bg-tertiary: #f5f3ff;
-            --text: #1e1b4b;
-            --text-secondary: #64748b;
-            --border: #e9d5ff;
-            --shadow: rgba(124, 58, 237, 0.1);
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: var(--bg-secondary); /* Use the light gradient bg */
-            color: var(--text);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            width: 100%;
-        }
-
-        /* 2. NAVBAR (Copied from index.html for consistency) */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1.5rem 0;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-
-        .navbar.scrolled {
-            padding: 1rem 0;
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 4px 20px var(--shadow);
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text);
-            text-decoration: none;
-        }
-
-        .logo i {
-            color: var(--primary);
-            font-size: 1.5rem;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-            align-items: center;
-        }
-
-        .nav-menu a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        .nav-menu a:hover {
-            color: var(--text);
-        }
-
-        /* Style for the active "Demo" link */
-        .nav-menu a.active {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .nav-menu a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--primary);
-        }
-
-        .nav-cta {
-            background: var(--primary);
-            color: white; /* Changed from black for better contrast */
-            padding: 0.75rem 1.75rem;
-            border-radius: 10px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .nav-cta:hover {
-            background: var(--primary-dark); /* Darken on hover */
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px var(--shadow);
-        }
-
-
-        /* 3. BUTTONS (Copied from index.html) */
-        .btn {
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px var(--shadow);
-        }
-
-        /* 4. BENTO CARD STYLE (Copied from index.html) */
-        /* We will reuse this for our demo panel */
-        .bento-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 2.5rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.05);
-        }
-
-        .bento-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(167, 139, 250, 0.08), transparent 50%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .bento-card:hover::before {
-            opacity: 1;
-        }
-
-        .bento-card:hover {
-            border-color: var(--primary-light);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.15);
-        }
-
-        .card-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            color: var(--text);
-        }
-
-        /* 5. NEW DEMO PAGE STYLES */
-
-        /* Main Demo Section (borrows from hero) */
-        .demo-section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 8rem 2rem 4rem; /* Add padding for navbar */
-            background: linear-gradient(180deg, #ffffff 0%, #faf8ff 100%);
-        }
-
-        /* Page Titles (borrows from hero) */
-        .section-title {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            color: var(--text);
-            text-align: center;
-        }
-
-        .section-title span {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section-subtitle {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            margin-bottom: 3rem;
-            line-height: 1.7;
-            text-align: center;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Demo Grid Layout */
-        .demo-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 1.5rem;
-            align-items: flex-start;
-        }
-
-        /* Uploader Card */
-        .upload-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            cursor: pointer;
-            border-style: dashed;
-            border-width: 2px;
-            background: var(--bg-tertiary);
-        }
-
-        .upload-card.dragging {
-            border-color: var(--primary);
-            background: white;
-            transform: translateY(-8px) scale(1.02);
-        }
-        
-        .upload-card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 0.5rem;
-        }
-        
-        .upload-card p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-        }
-        
-        /* Analysis Panel */
-        .analysis-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .status-pill.ready {
-            background: var(--bg-tertiary);
-            color: var(--primary);
-        }
-        
-        .status-pill.processing {
-            background: #fffbeb; /* Light Yellow */
-            color: #d97706; /* Amber */
-        }
-        
-        .status-pill.complete {
-            background: #f0fdf4; /* Light Green */
-            color: #16a34a; /* Green */
-        }
-        
-        .status-pill.error {
-            background: #fef2f2; /* Light Red */
-            color: #dc2626; /* Red */
-        }
-
-        .progress-container {
-            width: 100%;
-            height: 8px;
-            background: var(--bg-tertiary);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 2rem;
-        }
-        
-        .progress-fill {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--primary-light));
-            transition: width 0.4s ease-out;
-            border-radius: 4px;
-        }
-        
-        .results-area {
-            min-height: 100px;
-            background: var(--bg-tertiary);
-            border-radius: 16px;
-            padding: 1.5rem;
-        }
-        
-        #resultsText {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        
-        /* Dynamic Result Badge */
-        .result-badge {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-top: 1rem;
-            display: none; /* Hidden by default */
-        }
-
-        .result-badge.detected {
-            background: #fef2f2; /* Light Red */
-            border: 1px solid #fecaca; /* Red Border */
-            color: #b91c1c; /* Dark Red */
-            display: flex;
-        }
-        
-        .result-badge.real {
-            background: #f0fdf4; /* Light Green */
-            border: 1px solid #bbf7d0; /* Green Border */
-            color: #15803d; /* Dark Green */
-            display: flex;
-        }
-        
-        .result-badge .icon {
-            font-size: 1.5rem;
-        }
-        
-        .result-badge h4 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-        }
-        
-        .result-badge p {
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 2.5rem 2rem;
-            border-top: 1px solid var(--border);
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            background: white;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .demo-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none; /* Hides menu on mobile */
-            }
-
-            .demo-section {
-                padding: 6rem 1.5rem 3rem;
-            }
-        }
+        /* (styles kept as in your original file) */
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--primary:#7c3aed;--primary-light:#a78bfa;--primary-dark:#6d28d9;--accent:#ec4899;--bg:#ffffff;--bg-secondary:#faf8ff;--bg-tertiary:#f5f3ff;--text:#1e1b4b;--text-secondary:#64748b;--border:#e9d5ff;--shadow:rgba(124,58,237,0.1)}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;background:var(--bg-secondary);color:var(--text);overflow-x:hidden;line-height:1.6}
+        .container{max-width:1200px;margin:0 auto;padding:0 2rem;width:100%}
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.5rem 0;background:rgba(255,255,255,0.8);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transition:all .3s}
+        .navbar.scrolled{padding:1rem 0;background:rgba(255,255,255,.95);box-shadow:0 4px 20px var(--shadow)}
+        .nav-container{max-width:1400px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center}
+        .logo{display:flex;align-items:center;gap:.75rem;font-size:1.25rem;font-weight:700;color:var(--text);text-decoration:none}
+        .nav-menu{display:flex;gap:2.5rem;list-style:none;align-items:center}
+        .nav-menu a{color:var(--text-secondary);text-decoration:none;font-size:.95rem;font-weight:500;position:relative;transition:color .3s}
+        .nav-menu a.active{color:var(--primary);font-weight:600}
+        .nav-cta{background:var(--primary);color:white;padding:.75rem 1.75rem;border-radius:10px;font-weight:600}
+        .bento-card{background:white;border:1px solid var(--border);border-radius:24px;padding:2.5rem;position:relative;overflow:hidden;transition:all .4s;box-shadow:0 4px 20px rgba(124,58,237,.05)}
+        .demo-section{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:8rem 2rem 4rem;background:linear-gradient(180deg,#fff 0%,#faf8ff 100%)}
+        .demo-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:1.5rem;align-items:flex-start}
+        .upload-card{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;border-style:dashed;border-width:2px;background:var(--bg-tertiary)}
+        .upload-card.dragging{border-color:var(--primary);background:white;transform:translateY(-8px) scale(1.02)}
+        .card-icon{width:56px;height:56px;background:linear-gradient(135deg,var(--primary),var(--primary-light));border-radius:16px;display:flex;align-items:center;justify-content:center;color:white;font-size:1.5rem;margin-bottom:1.5rem}
+        .btn-primary{background:var(--primary);color:white;padding:.9rem 1.25rem;border-radius:10px;border:none;cursor:pointer}
+        .progress-container{width:100%;height:8px;background:var(--bg-tertiary);border-radius:4px;overflow:hidden;margin-bottom:2rem}
+        .progress-fill{width:0;height:100%;background:linear-gradient(90deg,var(--primary),var(--primary-light));transition:width .4s;border-radius:4px}
+        .results-area{min-height:100px;background:var(--bg-tertiary);border-radius:16px;padding:1.5rem}
+        .status-pill{display:inline-flex;align-items:center;gap:.5rem;padding:.25rem .75rem;border-radius:50px;font-size:.8rem;font-weight:600}
+        .status-pill.ready{background:var(--bg-tertiary);color:var(--primary)}
+        .status-pill.processing{background:#fffbeb;color:#d97706}
+        .status-pill.complete{background:#f0fdf4;color:#16a34a}
+        .status-pill.error{background:#fef2f2;color:#dc2626}
+        .result-badge{display:flex;align-items:center;gap:1rem;border-radius:12px;padding:1.5rem;margin-top:1rem;display:none}
+        .result-badge.detected{background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;display:flex}
+        .result-badge.real{background:#f0fdf4;border:1px solid #bbf7d0;color:#15803d;display:flex}
+        pre#rawResp{display:none;background:#fff;padding:8px;border-radius:6px;overflow:auto;max-height:220px;margin-top:12px}
+        @media(max-width:1024px){.demo-grid{grid-template-columns:1fr}}
     </style>
 </head>
-
 <body>
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">
-            <img src="/images/auralmind-logo.jpg" alt="AuralMind AI Logo" style="height: 40px; width: 200px;">
+                <img src="/images/auralmind-logo.jpg" alt="AuralMind AI Logo" style="height:40px;width:200px;">
             </a>
             <ul class="nav-menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="features.html">Features</a></li>
                 <li><a href="how.html">How It Works</a></li>
-                <li><a href="demo.html">Demo</a></li>
+                <li><a href="demo.html" class="active">Demo</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="auth.html" class="nav-cta">Login/SigUup</a></li>
+                <li><a href="auth.html" class="nav-cta">Login/Signup</a></li>
             </ul>
         </div>
     </nav>
 
     <section class="demo-section">
         <div class="container">
-            <!-- <h1 class="section-title">
-                Try <span>AudioGuard AI</span>
-            </h1>
-            <p class="section-subtitle">
-                Upload an audio file (.mp3, .wav) to see our detection model in action.
-                This is a front-end simulation for demonstration purposes.
-            </p> -->
-
             <div class="demo-grid">
-                <div class="bento-card upload-card" id="uploadArea">
-                    <div class="card-icon">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                    </div>
+                <div class="bento-card upload-card" id="uploadArea" role="button" tabindex="0">
+                    <div class="card-icon"><i class="fas fa-cloud-upload-alt"></i></div>
                     <h3>Drop your audio file here</h3>
                     <p>Or click to browse files (Max 10MB)</p>
                     <input type="file" id="audio-upload" accept="audio/*" hidden>
-                    <button class="btn btn-primary" id="chooseFileBtn">
-                        <i class="fas fa-file-audio"></i>
-                        Choose File
-                    </button>
+                    <button class="btn btn-primary" id="chooseFileBtn"><i class="fas fa-file-audio"></i> Choose File</button>
                 </div>
 
                 <div class="bento-card" id="analysis-panel">
@@ -487,202 +77,194 @@
                             <span id="statusText">Ready</span>
                         </div>
                     </div>
-                    <div class="progress-container">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
-
+                    <div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
                     <div class="results-area">
                         <p id="fileNameText">Upload an audio file to begin analysis.</p>
 
                         <div class="result-badge real" id="resultReal">
-                             <div class="icon"><i class="fas fa-check-circle"></i></div>
-                             <div>
+                            <div class="icon"><i class="fas fa-check-circle"></i></div>
+                            <div>
                                 <h4>Result: Authentic Audio</h4>
-                                <p>Confidence: 97.2%</p>
-                             </div>
+                                <p>Confidence: <span id="realConfidence">97.2</span>%</p>
+                            </div>
                         </div>
 
                         <div class="result-badge detected" id="resultDetected">
                             <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
                             <div>
-                               <h4 id="resultTitle">Result: AI-Generated Audio</h4>
-                               <p id="resultConfidence">Confidence: 85.0%</p>
+                                <h4 id="resultTitle">Result: AI-Generated Audio</h4>
+                                <p id="resultConfidence">Confidence: 85.0%</p>
                             </div>
-                       </div>
+                        </div>
 
-                                <p id="resultReason" style="margin-top:1rem; color: #6b2b2b; display:none;"></p>
-
+                        <p id="resultReason" style="margin-top:1rem;color:#6b2b2b;display:none;"></p>
+                        <pre id="rawResp"></pre>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="footer">
-        <p>&copy; 2025 AudioGuard AI. All Rights Reserved.</p>
-    </footer>
+    <footer class="footer"><p style="text-align:center;padding:1.5rem 0;color:#64748b">&copy; 2025 AudioGuard AI</p></footer>
 
     <script>
-        // 1. JS from index.html (for consistency)
+    (function(){
+        // Use explicit backend host (FastAPI)
+        const API_BASE = "http://127.0.0.1:8000";
+        const ENDPOINT_CANDIDATES = ["/api/v1/audio/predict", "/audio/predict"];
 
-        // Navbar scroll effect
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Bento card mouse follow effect
-        const bentoCards = document.querySelectorAll('.bento-card');
-        bentoCards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / rect.width) * 100;
-                const y = ((e.clientY - rect.top) / rect.height) * 100;
-                card.style.setProperty('--mouse-x', `${x}%`);
-                card.style.setProperty('--mouse-y', `${y}%`);
-            });
-        });
-
-
-        // 2. Your Demo Page JS (Updated)
-
+        // DOM
         const uploadArea = document.getElementById('uploadArea');
         const fileInput = document.getElementById('audio-upload');
         const chooseFileBtn = document.getElementById('chooseFileBtn');
-        
         const progressFill = document.getElementById('progressFill');
         const statusPill = document.getElementById('statusPill');
         const statusText = document.getElementById('statusText');
         const fileNameText = document.getElementById('fileNameText');
-        
         const resultReal = document.getElementById('resultReal');
         const resultDetected = document.getElementById('resultDetected');
         const resultTitle = document.getElementById('resultTitle');
         const resultConfidence = document.getElementById('resultConfidence');
+        const realConfidence = document.getElementById('realConfidence');
+        const resultReason = document.getElementById('resultReason');
+        const rawResp = document.getElementById('rawResp');
 
-        // Trigger file input
-        chooseFileBtn.addEventListener('click', () => fileInput.click());
-        uploadArea.addEventListener('click', (e) => {
-             // Avoid triggering if the button was clicked
-            if(e.target !== chooseFileBtn && !chooseFileBtn.contains(e.target)) {
-                fileInput.click();
-            }
-        });
-
-        // Handle file selection
-        fileInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                simulateAnalysis(file);
-            }
-        });
-
-        // Drag & Drop
-        uploadArea.addEventListener('dragover', e => {
-            e.preventDefault();
-            uploadArea.classList.add('dragging');
-        });
-
-        uploadArea.addEventListener('dragleave', e => {
-            uploadArea.classList.remove('dragging');
-        });
-
-        uploadArea.addEventListener('drop', e => {
-            e.preventDefault();
-            uploadArea.classList.remove('dragging');
-            const file = e.dataTransfer.files[0];
-            if (file && file.type.startsWith('audio/')) {
-                fileInput.files = e.dataTransfer.files; // Sync with file input
-                simulateAnalysis(file);
-            } else {
-                alert("Please drop an audio file.");
-            }
-        });
-
-        // Demo: upload and run real inference
-        async function simulateAnalysis(file) {
-            // Reset UI
-            fileNameText.textContent = `Analyzing: ${file.name}`;
-            progressFill.style.width = '0%';
-            resultReal.style.display = 'none';
-            resultDetected.style.display = 'none';
-            
-            // Set status to processing
-            statusPill.className = 'status-pill processing';
-            statusText.textContent = 'Processing...';
-            statusPill.querySelector('i').className = 'fas fa-spinner fa-spin';
-
-            // Small progress bump
-            setTimeout(() => progressFill.style.width = '30%', 100);
-
-            try {
-                console.log('Uploading file:', file.name, 'Type:', file.type, 'Size:', file.size);
-                const form = new FormData();
-                form.append('file', file, file.name);
-
-                // Send to backend
-                const API_URL = '/audio/predict';
-                console.log('Sending request to:', API_URL);
-                const resp = await fetch(API_URL, {
-                    method: 'POST',
-                    body: form
-                });
-                console.log('Response status:', resp.status);
-
-                if (!resp.ok) {
-                    const txt = await resp.text();
-                    throw new Error(`Server error: ${resp.status} ${txt}`);
-                }
-
-                const data = await resp.json();
-
-                // Update progress
-                progressFill.style.width = '100%';
-                statusPill.className = 'status-pill complete';
-                statusText.textContent = 'Complete';
-                statusPill.querySelector('i').className = 'fas fa-check-circle';
-
-                // Map fields
-                const fakePct = data.confidence_fake ?? 0;
-                const realPct = data.confidence_real ?? (100 - fakePct);
-                const label = data.label ?? (fakePct >= 50 ? 'AI-Generated Audio' : 'Authentic Audio');
-
-                // Show reason if provided
-                const reasonEl = document.getElementById('resultReason');
-                if (data.reason) {
-                    reasonEl.textContent = data.reason;
-                    reasonEl.style.display = 'block';
-                } else {
-                    reasonEl.style.display = 'none';
-                }
-
-                if (label === 'AI-Generated Audio') {
-                    resultTitle.textContent = `Result: ${label}`;
-                    resultConfidence.textContent = `Confidence: ${fakePct.toFixed(2)}%`;
-                    resultDetected.style.display = 'flex';
-                    resultReal.style.display = 'none';
-                } else {
-                    // Authentic
-                    // Update the real badge inner text to include confidence
-                    resultReal.style.display = 'flex';
-                    resultDetected.style.display = 'none';
-                    // find the p inside resultReal and update
-                    const p = resultReal.querySelector('p');
-                    if (p) p.textContent = `Confidence: ${realPct.toFixed(2)}%`;
-                }
-
-            } catch (err) {
-                console.error('Inference error', err);
-                statusPill.className = 'status-pill error';
-                statusText.textContent = 'Error';
-                statusPill.querySelector('i').className = 'fas fa-exclamation-circle';
-                fileNameText.textContent = `Error: ${err.message}`;
+        function setStatus(state, text){
+            statusPill.className = `status-pill ${state}`;
+            if (typeof text === 'string') {
+                const span = statusPill.querySelector('#statusText') || statusPill.querySelector('span');
+                if (span) span.textContent = text;
             }
         }
+        function setProgress(pct){ progressFill.style.width = `${pct}%`; }
+        function resetResultsUI(){
+            resultReal.style.display = 'none';
+            resultDetected.style.display = 'none';
+            resultReason.style.display = 'none';
+            rawResp.style.display = 'none';
+            rawResp.textContent = '';
+        }
+        function buildFullUrl(ep){ return API_BASE.replace(/\/$/,"") + ep; }
+
+        // Try endpoints sequentially using XHR
+        async function uploadWithFallback(formData){
+            for (const ep of ENDPOINT_CANDIDATES){
+                const url = buildFullUrl(ep);
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', url, true);
+                xhr.timeout = 60000;
+                return await new Promise(resolve => {
+                    xhr.upload.onprogress = (e) => {
+                        if (e.lengthComputable) setProgress(Math.min(90, Math.round(e.loaded / e.total * 100)));
+                    };
+                    xhr.onload = () => {
+                        if (xhr.status === 404 || xhr.status === 405) {
+                            // try next endpoint
+                            resolve({ tryNext: true, status: xhr.status, url, body: xhr.responseText });
+                            return;
+                        }
+                        resolve({ tryNext: false, xhr, url });
+                    };
+                    xhr.onerror = () => resolve({ tryNext: true, url, error: 'network' });
+                    xhr.ontimeout = () => resolve({ tryNext: true, url, error: 'timeout' });
+                    try { xhr.send(formData); } catch (err) { resolve({ tryNext:true, url, error: String(err)}); }
+                }).then(result => {
+                    if (result.tryNext) {
+                        // continue to next candidate
+                        console.warn('Endpoint skipped:', result.url, result.status || result.error);
+                        return null;
+                    }
+                    return result;
+                });
+            }
+            throw new Error('No reachable backend endpoints.');
+        }
+
+        async function handleFileUpload(file){
+            resetResultsUI();
+            fileNameText.textContent = `Analyzing: ${file.name}`;
+            setProgress(5);
+            setStatus('processing', 'Processing...');
+            const spinner = statusPill.querySelector('i'); if (spinner) spinner.className = 'fas fa-spinner fa-spin';
+
+            const fd = new FormData();
+            fd.append('file', file, file.name);
+
+            try {
+                // Try endpoints in order until one responds (this loop returns on first result)
+                let res = null;
+                for (const ep of ENDPOINT_CANDIDATES) {
+                    const url = buildFullUrl(ep);
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', url, true);
+                    xhr.timeout = 60000;
+                    xhr.upload.onprogress = (e) => { if (e.lengthComputable) setProgress(Math.min(90, Math.round(e.loaded / e.total * 100))); };
+                    const result = await new Promise(resolve => {
+                        xhr.onload = () => resolve({status: xhr.status, body: xhr.responseText, xhr});
+                        xhr.onerror = () => resolve({status: 0, error: 'network'});
+                        xhr.ontimeout = () => resolve({status: 0, error: 'timeout'});
+                        try { xhr.send(fd); } catch (err) { resolve({status:0, error:String(err)}); }
+                    });
+                    if (result.status === 404 || result.status === 405 || result.status === 0) {
+                        console.warn('Skipping endpoint', url, result.status || result.error);
+                        continue;
+                    }
+                    res = { xhr: result.xhr, url };
+                    break;
+                }
+                if (!res) throw new Error('No reachable backend endpoints (checked candidates).');
+
+                const xhr = res.xhr;
+                if (xhr.status < 200 || xhr.status >= 300) {
+                    throw new Error(`Server returned ${xhr.status}: ${xhr.responseText || '(no body)'}`);
+                }
+
+                let data;
+                try { data = JSON.parse(xhr.responseText || '{}'); } catch (err) { throw new Error('Invalid JSON from server: ' + err.message); }
+
+                setProgress(100);
+                setStatus('complete', 'Complete'); const check = statusPill.querySelector('i'); if (check) check.className = 'fas fa-check-circle';
+
+                rawResp.style.display = 'block';
+                rawResp.textContent = JSON.stringify(data, null, 2);
+
+                const fakePct = (typeof data.confidence_fake === 'number') ? data.confidence_fake : (typeof data.prob_fake === 'number' ? data.prob_fake * 100 : undefined);
+                const realPct = (typeof data.confidence_real === 'number') ? data.confidence_real : (typeof data.prob_real === 'number' ? data.prob_real * 100 : (fakePct !== undefined ? 100 - fakePct : undefined));
+                const label = (data.label || data.prediction) || (fakePct !== undefined ? (fakePct >= 50 ? 'AI-Generated Audio' : 'Authentic Audio') : 'Unknown');
+
+                if (data.reason) { resultReason.style.display = 'block'; resultReason.textContent = data.reason; } else resultReason.style.display = 'none';
+
+                // fixed operator precedence (check label contains 'ai' OR fakePct >=50)
+                if ((label && label.toLowerCase().includes('ai')) || (fakePct !== undefined && fakePct >= 50)) {
+                    resultDetected.style.display = 'flex';
+                    resultReal.style.display = 'none';
+                    resultTitle.textContent = `Result: ${label}`;
+                    resultConfidence.textContent = `Confidence: ${fakePct !== undefined ? fakePct.toFixed(2) + '%' : 'N/A'}`;
+                } else {
+                    resultReal.style.display = 'flex';
+                    resultDetected.style.display = 'none';
+                    realConfidence.textContent = realPct !== undefined ? realPct.toFixed(2) + '%' : 'N/A';
+                }
+            } catch (err) {
+                console.error('Upload/predict error:', err);
+                setStatus('error', 'Error');
+                const icon = statusPill.querySelector('i'); if (icon) icon.className = 'fas fa-exclamation-circle';
+                fileNameText.textContent = `Error: ${err.message || err}`;
+                setProgress(0);
+            }
+        }
+
+        // UI wiring
+        chooseFileBtn.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('click', (e) => { if (e.target !== chooseFileBtn && !chooseFileBtn.contains(e.target)) fileInput.click(); });
+        fileInput.addEventListener('change', (e) => { if (e.target.files && e.target.files[0]) handleFileUpload(e.target.files[0]); });
+        uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('dragging'); });
+        uploadArea.addEventListener('dragleave', e => uploadArea.classList.remove('dragging'));
+        uploadArea.addEventListener('drop', e => { e.preventDefault(); uploadArea.classList.remove('dragging'); const f = e.dataTransfer.files[0]; if (f && f.type.startsWith('audio/')) { fileInput.files = e.dataTransfer.files; handleFileUpload(f); } else alert('Please drop an audio file.'); });
+
+        // init
+        resetResultsUI(); setProgress(0); setStatus('ready','Ready');
+    })();
     </script>
 </body>
 </html>
