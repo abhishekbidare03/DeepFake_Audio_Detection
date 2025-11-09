@@ -1,0 +1,12 @@
+file,label,prob_fake
+demo.wav,real,0.0000
+demo2.wav,real,0.0000
+Demo3.wav,fake,1.0000
+Demo4.wav,real,0.0000
+Demo6.wav,real,0.0000
+Demo7.wav,real,0.0001
+demo8.wav,fake,1.0000
+file1000.wav,fake,1.0000
+file1002.wav,fake,0.9516
+file1004.wav,real,0.0000
+file1020.wav,real,0.0025

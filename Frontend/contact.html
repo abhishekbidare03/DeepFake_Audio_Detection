@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>AudioGuard AI - Contact</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* 1. YOUR GLOBAL STYLES & THEME (from index.html) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #7c3aed;
+            --primary-light: #a78bfa;
+            --primary-dark: #6d28d9;
+            --accent: #ec4899;
+            --bg: #ffffff;
+            --bg-secondary: #faf8ff;
+            --bg-tertiary: #f5f3ff;
+            --text: #1e1b4b;
+            --text-secondary: #64748b;
+            --border: #e9d5ff;
+            --shadow: rgba(124, 58, 237, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-secondary);
+            /* Use the light gradient bg */
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        /* 2. NAVBAR (Copied from index.html for consistency) */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.5rem 0;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 1rem 0;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: var(--text);
+        }
+
+        /* Style for the active "Contact" link */
+        .nav-menu a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .nav-cta {
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.75rem;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+
+        /* 3. BUTTONS (Copied from index.html) */
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px var(--shadow);
+        }
+
+        /* 4. BENTO CARD STYLE (Copied from index.html) */
+        .bento-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.05);
+        }
+
+        .bento-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(167, 139, 250, 0.08), transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .bento-card:hover::before {
+            opacity: 1;
+        }
+
+        .bento-card:hover {
+            border-color: var(--primary-light);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.15);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text);
+        }
+
+        /* 5. NEW CONTACT PAGE STYLES */
+
+        /* Main Contact Section */
+        .contact-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            /* Add padding for navbar */
+            background: linear-gradient(180deg, #ffffff 0%, #faf8ff 100%);
+        }
+
+        /* Page Titles (borrows from hero) */
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+            text-align: center;
+        }
+
+        .section-title span {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.7;
+            text-align: center;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Contact Grid Layout */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        /* Contact Info Card */
+        .contact-info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .info-item i {
+            font-size: 1.2rem;
+            color: var(--primary);
+            width: 24px;
+            text-align: center;
+        }
+
+        .info-item span {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        /* Contact Form Styles */
+        .contact-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-form label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            font-family: inherit;
+            color: var(--text);
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+        
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.8;
+        }
+        
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+        
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        /* Form Success Message */
+        .form-success-message {
+            display: none; /* Hidden by default */
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            background: #f0fdf4; /* Light Green */
+            border: 1px solid #bbf7d0; /* Green Border */
+            color: #15803d; /* Dark Green */
+            font-weight: 600;
+        }
+        .form-success-message.visible {
+            display: block;
+        }
+
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            background: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none; /* Hides menu on mobile */
+            }
+
+            .contact-section {
+                padding: 6rem 1.5rem 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+   <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+            <img src="/images/auralmind-logo.jpg" alt="AuralMind AI Logo" style="height: 40px; width: 200px;">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="how.html">How It Works</a></li>
+                <li><a href="demo.html">Demo</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="auth.html" class="nav-cta">Login/SigUup</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="contact-section">
+        <div class="container">
+            <h1 class="section-title">
+                Get In <span>Touch</span>
+            </h1>
+            <p class="section-subtitle">
+                Have questions about our technology or pricing? We'd love to hear from you.
+            </p>
+
+            <div class="contact-grid">
+                <div class="bento-card">
+                    <h3 class="card-title">Contact Information</h3>
+                    <div class="contact-info-list">
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>hello@audioguard.ai</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+91 99807 55907</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>SGBIT, Belagavi, India</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-card">
+                    <h3 class="card-title">Send us a Message</h3>
+                    
+                    <div class="form-success-message" id="formSuccess">
+                        <i class="fas fa-check-circle"></i> Thanks! Your message has been sent (demo).
+                    </div>
+
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" name="message" placeholder="How can we help you?" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            Send Message
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2025 AudioGuard AI. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // 1. JS from index.html (for consistency)
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Bento card mouse follow effect
+        const bentoCards = document.querySelectorAll('.bento-card');
+        bentoCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                card.style.setProperty('--mouse-x', `${x}%`);
+                card.style.setProperty('--mouse-y', `${y}%`);
+            });
+        });
+
+
+        // 2. Contact Form JS (Improved)
+        const contactForm = document.getElementById('contactForm');
+        const formSuccess = document.getElementById('formSuccess');
+
+        contactForm.addEventListener('submit', e => {
+            e.preventDefault();
+            
+            // Show the success message
+            formSuccess.classList.add('visible');
+            
+            // Reset the form
+            e.target.reset();
+            
+            // Hide the success message after 5 seconds
+            setTimeout(() => {
+                formSuccess.classList.remove('visible');
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

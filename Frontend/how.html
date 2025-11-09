@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AudioGuard AI - The Project Journey</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="story.css">
+</head>
+<body>
+
+   <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+            <img src="/images/auralmind-logo.jpg" alt="AuralMind AI Logo" style="height: 40px; width: 200px;">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="D:\CSE\DeepFake\Frontend\index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="how.html">How It Works</a></li>
+                <li><a href="demo.html">Demo</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="auth.html" class="nav-cta">Login/SigUup</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main id="story-page">
+
+        <section id="hero" class="hero">
+            <div class="floating-shapes">
+                <div class="shape"></div>
+                <div class="shape"></div>
+            </div>
+
+            <div class="container">
+                <h1 class="fade-in">Deepfake Audio Detection:<br>How We Built It</h1>
+                <p class="hero-subtitle fade-in" data-delay="100">
+                    A look into the data, models, and architecture behind our AI detection system.
+                </p>
+
+                <div class="pipeline-container fade-in" data-delay="200">
+                    <div class="pipeline-node" id="pipe-node-0">
+                        <div class="node-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.858 5.858a9 9 0 0112.728 0m-12.728 0a9 9 0 000 12.728m0-12.728L12 12l5.858-5.858" /></svg>
+                        </div>
+                        <span>Audio</span>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-node" id="pipe-node-1">
+                        <div class="node-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.096 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        </div>
+                        <span>Preprocess</span>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-node" id="pipe-node-2">
+                        <div class="node-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m3 6v-2m-3-10V5a2 2 0 00-2-2h-3l-1-1-1 1H6a2 2 0 00-2 2v2m16 0h-2M3 7H1" /></svg>
+                        </div>
+                        <span>Features</span>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-node" id="pipe-node-3">
+                        <div class="node-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2 1M4 7l2-1M4 7v2.5M12 21v-2.5M4.22 18.78l1.41-1.41M18.37 18.37l-1.41-1.41M12 2.05c-.16.02-.33.04-.5.06C6.88 2.5 2.5 6.88 2.06 11.5c-.02.17-.04.34-.06.5m19.94-.5c-.02-.16-.04-.33-.06-.5C21.5 6.88 17.12 2.5 12.5 2.06c-.17-.02-.34-.04-.5-.06m0 19.88c.16-.02.33-.04.5-.06C17.12 21.5 21.5 17.12 21.94 12.5c.02-.17.04-.34.06-.5m-19.94.5c.02.16.04.33.06.5C2.5 17.12 6.88 21.5 11.5 21.94c.17.02.34.04.5.06" /></svg>
+                        </div>
+                        <span>Model</span>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-node" id="pipe-node-4">
+                        <div class="node-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <span>Result</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="problem">
+            <div class="container">
+                <h2 class="section-title fade-in">The Problem: A Growing Threat</h2>
+                <p class="section-subtitle fade-in">
+                    AI-generated deepfake audio is no longer science fiction. It's a clear and present danger used to commit fraud, spread misinformation, and attack digital identities.
+                </p>
+                <div class="grid-3">
+                    <div class="bento-card fade-in">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0c-1.657 0-3-.895-3-2s1.343-2 3-2 3-.895 3-2-1.343-2-3-2m-3.401 10.038C7.031 16.58 5 14.49 5 12c0-2.49 2.031-4.58 3.599-5.038m5.802 10.076C16.969 16.58 19 14.49 19 12c0-2.49-2.031-4.58-3.599-5.038" /></svg>
+                        </div>
+                        <h3 class="card-title">Fraud & Voice Scams</h3>
+                        <p>Criminals use voice clones to impersonate executives (CEO fraud) or family members, tricking victims into transferring millions or revealing sensitive data.</p>
+                    </div>
+                    <div class="bento-card fade-in" data-delay="100">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" /></svg>
+                        </div>
+                        <h3 class="card-title">Identity & Authentication</h3>
+                        <p>Voice biometrics ("My voice is my password") are now vulnerable. Deepfakes can be used to bypass security systems, granting unauthorized access to bank accounts and personal devices.</p>
+                    </div>
+                    <div class="bento-card fade-in" data-delay="200">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 12h6M7 8h6" /></svg>
+                        </div>
+                        <h3 class="card-title">Misinformation</h3>
+                        <p>Imagine a fake audio clip of a political leader declaring war or a scientist fabricating data. The potential for social harm, stock market manipulation, and political chaos is immense.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="datasets">
+            <div class="container">
+                <h2 class="section-title fade-in">The Foundation: Our Datasets</h2>
+                <p class="section-subtitle fade-in">
+                    A robust model is built on diverse, high-quality data. We combined leading academic benchmarks with real-world samples to ensure our model generalizes well.
+                </p>
+
+                <div class="dataset-list">
+                    <div class="bento-card dataset-card fade-in">
+                        <div class="spectrogram-placeholder"></div>
+                        <div class="dataset-content">
+                            <h3>ASVspoof 2019 (Logical Access)</h3>
+                            <p><strong>Contains:</strong> A large-scale, standardized set of genuine human speech and "spoofed" audio generated by 19 different text-to-speech (TTS) and voice conversion (VC) systems.</p>
+                            <p><strong>Why:</strong> This is the gold standard for academic research. Training on ASVspoof ensures our model learns to identify a wide variety of known synthesis techniques.</p>
+                        </div>
+                    </div>
+                    <div class="bento-card dataset-card fade-in">
+                        <div class="spectrogram-placeholder"></div>
+                        <div class="dataset-content">
+                            <h3>Fake-or-Real (FoR) Dataset</h3>
+                            <p><strong>Contains:</strong> A collection of deepfake audio clips created using publicly available online tools, reflecting the type of fakes an average person might create and encounter.</p>
+                            <p><strong>Why:</strong> This dataset provided crucial "in-the-wild" examples, helping the model move beyond purely academic fakes and detect audio from common, accessible generators.</p>
+                        </div>
+                    </div>
+                    <div class="bento-card dataset-card fade-in">
+                        <div class="spectrogram-placeholder"></div>
+                        <div class="dataset-content">
+                            <h3>Internal & Wild Clips (Curated)</h3>
+                            <p><strong>Contains:</strong> A manually curated collection of audio from various sources (YouTube, news, etc.) and samples we generated ourselves using the latest open-source models.</p>
+                            <p><strong>Why:</strong> This diverse set acted as a "secret weapon" to improve generalization and test the model against the newest, most sophisticated deepfake technology not present in older datasets.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="section-divider fade-in"></div>
+
+        <section id="preprocessing">
+            <div class="container">
+                <h2 class="section-title fade-in">The "Kitchen": Preprocessing Pipeline</h2>
+                <p class="section-subtitle fade-in">
+                    Raw audio is messy. Our pipeline cleans, normalizes, and transforms audio into a "language" the AI can understand: a Log-Mel Spectrogram.
+                </p>
+
+                <div class="stepper-container fade-in">
+                    <div class="stepper-step">
+                        <div class="step-icon">1</div>
+                        <div class="step-label">Load WAV</div>
+                    </div>
+                    <div class="stepper-arrow">→</div>
+                    <div class="stepper-step">
+                        <div class="step-icon">2</div>
+                        <div class="step-label">Resample (16kHz)</div>
+                    </div>
+                    <div class="stepper-arrow">→</div>
+                    <div class="stepper-step">
+                        <div class="step-icon">3</div>
+                        <div class="step-label">Trim Silence</div>
+                    </div>
+                    <div class="stepper-arrow">→</div>
+                    <div class="stepper-step">
+                        <div class="step-icon">4</div>
+                        <div class="step-label">Normalize</div>
+                    </div>
+                    <div class="stepper-arrow">→</div>
+                    <div class="stepper-step">
+                        <div class="step-icon">5</div>
+                        <div class="step-label">Log-Mel Spectrogram</div>
+                    </div>
+                    <div class="stepper-arrow">→</div>
+                    <div class="stepper-step">
+                        <div class="step-icon">6</div>
+                        <div class="step-label">Save .npy</div>
+                    </div>
+                </div>
+
+                <div class="spectrogram-mockup-card bento-card fade-in">
+                    <div class="spectrogram-mockup-img"></div>
+                    <div class="spectrogram-mockup-text">
+                        <h3>What is a Log-Mel Spectrogram?</h3>
+                        <p>Think of it as a "visual fingerprint" of audio. It plots frequency (pitch) over time, with brightness representing amplitude (loudness). By using the Mel scale, it emphasizes the frequencies humans hear best, making it the perfect input for an AI model to "see" the difference between real and fake speech.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="training">
+            <div class="container">
+                <h2 class="section-title fade-in">The "Brain": Our Training Process</h2>
+                <div class="grid-2">
+                    <div class="text-content fade-in">
+                        <h3>Teaching the AI to Listen</h3>
+                        <p>We trained a Convolutional Neural Network (CNN) to "see" the subtle artifacts and unnatural patterns in the spectrograms of fake audio.</p>
+                        <p>The model was trained for over 50 epochs on our combined dataset, allowing it to learn from millions of examples. We used data augmentation to simulate different environments (noise, reverb) to make the model more robust.</p>
+                        
+                        <ul class="metrics-list">
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                <strong>Train/Val/Test Split:</strong> 80% / 10% / 10%
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                <strong>Optimizer:</strong> Adam (Learning Rate: 1e-4)
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                <strong>Loss Function:</strong> Binary Cross-Entropy (BCE)
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                <strong>Augmentations:</strong> Noise, Pitch Shift, Time Stretch
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="video-container-wrapper fade-in" data-delay="100">
+                        <div class="video-container">
+                            <div class="video-placeholder-text">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                <span>Model Training Video Placeholder</span>
+                                <p>(Insert .mp4 of training epochs here)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="model">
+            <div class="container">
+                <h2 class="section-title fade-in">Model Architecture: Simple & Effective</h2>
+                <p class="section-subtitle fade-in">
+                    We opted for a lightweight 2D Convolutional Neural Network (CNN). This architecture is fast, efficient, and excels at finding spatial patterns in images—or in our case, spectrograms.
+                </p>
+                <div class="arch-diagram bento-card fade-in">
+                    <div class="arch-box input">Input<br>(Log-Mel)</div>
+                    <div class="arch-arrow">→</div>
+                    <div class="arch-box conv">Conv<br>ReLU<br>Pool</div>
+                    <div class="arch-arrow">→</div>
+                    <div class="arch-box conv">Conv<br>ReLU<br>Pool</div>
+                    <div class="arch-arrow">→</div>
+                    <div class="arch-box flat">Flatten</div>
+                    <div class="arch-arrow">→</div>
+                    <div class="arch-box dense">Dense</div>
+                    <div class="arch-arrow">→</div>
+                    <div class="arch-box output">Output<br>(Real/Fake)</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider fade-in"></div>
+
+        <section id="backend">
+            <div class="container">
+                <h2 class="section-title fade-in">The "Engine": Backend Architecture</h2>
+                <p class="section-subtitle fade-in">
+                    The backend is built with FastAPI for high-speed, asynchronous API performance. It manages the entire process from audio upload to returning a clean JSON verdict.
+                </p>
+                <div class="grid-2">
+                    <div class="arch-diagram-v fade-in">
+                        <div class="arch-box-v"><span>1.</span> User Upload (POST)</div>
+                        <div class="arch-arrow-v">↓</div>
+                        <div class="arch-box-v"><span>2.</span> FastAPI Endpoint</div>
+                        <div class="arch-arrow-v">↓</div>
+                        <div class="arch-box-v"><span>3.</span> Audio Preprocessing</div>
+                        <div class="arch-arrow-v">↓</div>
+                        <div class="arch-box-v"><span>4.</span> Model Inference (ONNX)</div>
+                        <div class="arch-arrow-v">↓</div>
+                        <div class="arch-box-v"><span>5.</span> Return JSON Result</div>
+                    </div>
+                    <div class="code-container bento-card fade-in" data-delay="100">
+                        <h3>Example JSON Response</h3>
+                        <p>The API returns a clear, simple JSON object with the verdict, our confidence level, and server latency.</p>
+<pre><code>{
+  "label": "fake",
+  "confidence": 0.92,
+  "confidence_percent": "92.0%",
+  "model": "cnn_logmel_v1",
+  "latency_ms": 650
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="frontend">
+            <div class="container">
+                <h2 class="section-title fade-in">The "Dashboard": Frontend Pipeline</h2>
+                <p class="section-subtitle fade-in">
+                    The frontend is built with clean HTML, CSS, and vanilla JavaScript. It provides a seamless user experience, handling file uploads and visualizing the final result without a page reload.
+                </p>
+                <div class="arch-diagram bento-card fade-in">
+                    <div class="arch-box">User Upload</div>
+                    <div class="arch-arrow">→</div>
+                    <div class="arch-box">Waveform Preview</div>
+                    <div class="arch-arrow">→</div>
+                    <div class="arch-box">Async API Call</div>
+                    <div class="arch-arrow">→</div>
+                    <div class="arch-box">Show Progress</div>
+                    <div class="arch-arrow">→</div>
+                    <div class="arch-box output">Display Verdict</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="system">
+            <div class="container">
+                <h2 class="section-title fade-in">The Full Picture: System Architecture</h2>
+                <p class="section-subtitle fade-in">
+                    Here’s how all the pieces connect to create a single, cohesive application.
+                </p>
+                <div class="system-diagram-full fade-in">
+                    <div class="system-card bento-card frontend">
+                        <h4>Frontend UI (Browser)</h4>
+                        <p>User uploads file, JS sends request.</p>
+                    </div>
+                    <div class="system-arrow">
+                        <span>API Request (POST /detect)</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </div>
+                    <div class="system-card bento-card backend">
+                        <h4>FastAPI Backend (Server)</h4>
+                        <p>Receives audio, routes to engine.</p>
+                        <div class="system-arrow-inner">↓</div>
+                        <div class="system-card bento-card model">
+                            <h4>Inference Engine</h4>
+                            <p>1. Preprocess Audio</p>
+                            <p>2. Run Deepfake Model</p>
+                            <p>3. Generate Result</p>
+                        </div>
+                    </div>
+                    <div class="system-arrow return">
+                        <span>JSON Response</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" /></svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider fade-in"></div>
+
+        <section id="results">
+            <div class="container">
+                <h2 class="section-title fade-in">The Verdict: Performance & Results</h2>
+                <p class="section-subtitle fade-in">
+                    The final model is both highly accurate and fast, capable of delivering real-time results on our test dataset.
+                </p>
+                <div class="grid-2">
+                    <div class="metrics-grid">
+                        <div class="bento-card metric-card fade-in">
+                            <span class="metric-value">99.7%</span>
+                            <span class="metric-label">Accuracy</span>
+                        </div>
+                        <div class="bento-card metric-card fade-in" data-delay="100">
+                            <span class="metric-value">0.99</span>
+                            <span class="metric-label">F1 Score</span>
+                        </div>
+                        <div class="bento-card metric-card fade-in" data-delay="200">
+                            <span class="metric-value">0.42%</span>
+                            <span class="metric-label">Equal Error Rate (EER)</span>
+                        </div>
+                        <div class="bento-card metric-card fade-in" data-delay="300">
+                            <span class="metric-value">~650ms</span>
+                            <span class="metric-label">Avg. Inference Time</span>
+                        </div>
+                    </div>
+                    <div class="bento-card roc-placeholder fade-in" data-delay="100">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                        <h3>ROC Curve (Test Set)</h3>
+                        <p>A placeholder for the Receiver Operating Characteristic curve, demonstrating high True Positive Rate and low False Positive Rate.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="learnings">
+            <div class="container">
+                <h2 class="section-title fade-in">Key Learnings & Conclusion</h2>
+                <div class="bento-card fade-in">
+                    <h3 class="card-title">What We Learned Building This Project</h3>
+                    <ul class="learnings-list">
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                            <span><strong>Spectrograms are key:</strong> Log-Mel Spectrograms proved to be a far superior feature representation than raw audio, allowing the CNN to easily find visual patterns of fakeness.</span>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                            <span><strong>Dataset diversity is crucial:</strong> Relying *only* on ASVspoof led to overfitting. Adding "in-the-wild" and internally generated fakes dramatically improved the model's ability to generalize.</span>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                            <span><strong>Preprocessing is 80% of the work:</strong> A clean, standardized preprocessing pipeline was the single biggest factor in achieving stable training and high accuracy.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="cta">
+            <div class="container fade-in">
+                <h2>Ready to see it in action?</h2>
+                <p class="section-subtitle">Test the system yourself with our live demo.</p>
+                <a href="demo.html" class="btn btn-primary btn-large">
+                    Try the Live Demo
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 AudioGuard AI Project. Built for demonstration.</p>
+    </footer>
+
+    <script src="story.js"></script>
+</body>
+</html>

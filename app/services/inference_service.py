@@ -54,7 +54,15 @@ def load_model(model_path, device=None):
 
     # map_location ensures compatibility across devices
     state = torch.load(model_path, map_location=device)
-    model.load_state_dict(state)
+    # Try full load first, otherwise load matching keys only (handles final-layer size mismatch)
+    try:
+        model.load_state_dict(state)
+    except Exception:
+        model_dict = model.state_dict()
+        pretrained = {k: v for k, v in state.items() if k in model_dict and v.size() == model_dict[k].size()}
+        model_dict.update(pretrained)
+        model.load_state_dict(model_dict)
+
     model.to(device)
     model.eval()
     return model
@@ -77,14 +85,30 @@ def predict(audio_path, model_path=None, device=None):
 
     with torch.no_grad():
         outputs = model(tensor)
-        probs = F.softmax(outputs, dim=1).cpu().numpy()[0]
-        pred = int(probs.argmax())
 
-    label = 'fake' if pred == 1 else 'real'
+        # Handle both binary-logit (single output) and 2-class logits
+        if outputs.dim() == 2 and outputs.size(1) == 1:
+            # single logit: use sigmoid; prob_fake = sigmoid(output)
+            prob_fake = torch.sigmoid(outputs).cpu().numpy()[0][0]
+            prob_real = 1.0 - prob_fake
+        else:
+            probs = F.softmax(outputs, dim=1).cpu().numpy()[0]
+            # assume index 1 => fake, index 0 => real
+            if len(probs) >= 2:
+                prob_fake = float(probs[1])
+                prob_real = float(probs[0])
+            else:
+                # fallback: treat highest as predicted fake/real
+                prob_fake = float(probs.max())
+                prob_real = 1.0 - prob_fake
+
+        # Determine label
+        label = 'AI-Generated Audio' if prob_fake >= 0.5 else 'Authentic Audio'
+
     return {
         'label': label,
-        'class_index': pred,
-        'probabilities': probs.tolist()
+        'prob_fake': float(prob_fake),
+        'prob_real': float(prob_real)
     }
 
 

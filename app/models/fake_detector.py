@@ -33,7 +33,7 @@ class AudioCNN(nn.Module):
         # Fully connected layers
         self.fc1 = nn.Linear(256 * 8 * 8, 256)  # Adjusted for larger network
         self.fc2 = nn.Linear(256, 64)
-        self.fc3 = nn.Linear(64, 2)
+        self.fc3 = nn.Linear(64, 1)  # Changed to output single value for binary classification
         
         # Dropout for regularization
         self.dropout1 = nn.Dropout(0.3)  # Lower dropout rate

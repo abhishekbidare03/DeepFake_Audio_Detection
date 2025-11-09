@@ -1,0 +1,28 @@
+Model: D:\CSE\DeepFake\models\model_new_data_acc_49.91.pth
+Total: 1088
+Accuracy: 49.91%
+Confusion matrix:
+[[542   2]
+ [543   1]]
+
+Sample errors:
+D:\CSE\DeepFake\New_dataset\testing\real\file1044.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:0 pred:1
+D:\CSE\DeepFake\New_dataset\testing\real\file827.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:0 pred:1
+D:\CSE\DeepFake\New_dataset\testing\fake\file100.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:1 pred:0
+D:\CSE\DeepFake\New_dataset\testing\fake\file1000.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:1 pred:0
+D:\CSE\DeepFake\New_dataset\testing\fake\file1001.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:1 pred:0
+D:\CSE\DeepFake\New_dataset\testing\fake\file1004.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:1 pred:0
+D:\CSE\DeepFake\New_dataset\testing\fake\file1005.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:1 pred:0
+D:\CSE\DeepFake\New_dataset\testing\fake\file1010.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:1 pred:0
+D:\CSE\DeepFake\New_dataset\testing\fake\file1018.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:1 pred:0
+D:\CSE\DeepFake\New_dataset\testing\fake\file1019.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:1 pred:0
+D:\CSE\DeepFake\New_dataset\testing\fake\file1021.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:1 pred:0
+D:\CSE\DeepFake\New_dataset\testing\fake\file1029.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:1 pred:0
+D:\CSE\DeepFake\New_dataset\testing\fake\file1038.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:1 pred:0
+D:\CSE\DeepFake\New_dataset\testing\fake\file1040.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:1 pred:0
+D:\CSE\DeepFake\New_dataset\testing\fake\file1045.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:1 pred:0
+D:\CSE\DeepFake\New_dataset\testing\fake\file1046.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:1 pred:0
+D:\CSE\DeepFake\New_dataset\testing\fake\file1047.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:1 pred:0
+D:\CSE\DeepFake\New_dataset\testing\fake\file1048.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:1 pred:0
+D:\CSE\DeepFake\New_dataset\testing\fake\file1053.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:1 pred:0
+D:\CSE\DeepFake\New_dataset\testing\fake\file1054.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav true:1 pred:0
