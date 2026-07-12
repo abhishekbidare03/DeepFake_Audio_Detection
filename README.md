@@ -158,7 +158,7 @@ When preparing results for publication, include:
 - Dataset versions and exact split lists (file lists with hashes).
 - Full training logs and checkpoint references.
 
-## Expected results (placeholders)
+## Results 
 Include a short table or summary of the best-performing model and main metrics on a held-out test set. For reproducibility, replace the placeholders below with your actual numbers before publication.
 
 Model | AUC-ROC | EER | Accuracy
