@@ -224,8 +224,3 @@ python server.py
 Export results and plots:
 - After running experiments, check `results/` for CSVs and plots. Use the saved checkpoint referred to in your logs for reproducibility.
 
----
-
-If you want, I can:
-- Insert actual experiment numbers and plots into this README if you point me to files under `results/` or share the values you want shown.
-- Create a `README_research.md` or update `README.md` directly with a commit (specify commit message and branch).
